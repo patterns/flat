@@ -22,6 +22,10 @@ tinygo build -o hello.wasm -target=wasi -gc=leaking -no-debug cmd/stdout/*.go
 
 ## Credits
 
+[gopicotts by Todd Neal](https://github.com/tzneal/gopicotts)
+
+[pico-tts by Michael Clark](https://github.com/Iiridayn/pico-tts)
+
 [Cloudflare WASI](https://blog.cloudflare.com/running-zig-with-wasi-on-cloudflare-workers/)
 
 [Bazel and Go](https://www.tweag.io/blog/2021-09-08-rules_go-gazelle/)
