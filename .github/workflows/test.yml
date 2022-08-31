@@ -5,7 +5,7 @@ on:
   pull_request:
 
 env:
-  DEBVER: placeholder
+  DEBVER: svox-1.0+git20130326
 
 jobs:
 
@@ -22,10 +22,13 @@ jobs:
           sudo apt-get update
           sudo apt-get source libttspico-utils
 
-    - name: see files
-      run: ls -l
-      #    - name: Tarball
-      #      run: tar -zcvf test-files.tgz pico/
+    - name: static lib
+      run: |
+          cd ${DEBVER}/pico/lib
+          gcc -fPIC -g -c *.c
+          ar rcs libpico.a *.o
+    - name: Tarball
+      run: tar -zcvf test-files.tgz ${DEBVER}/pico/lib/libpico.a
       #    - name: Store files
       #      uses: actions/upload-artifact@v3
       #      with:
