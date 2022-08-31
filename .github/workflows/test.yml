@@ -22,17 +22,20 @@ jobs:
           sudo apt-get update
           apt-get source libttspico-utils
 
-    - name: static lib
+    - name: Build static lib
       run: |
           cd ${DEBVER}/pico/lib
           gcc -fPIC -g -c *.c
           ar rcs libpico.a *.o
-    - name: Tarball
-      run: tar -zcvf test-files.tgz ${DEBVER}/pico/lib/libpico.a
-      #    - name: Store files
-      #      uses: actions/upload-artifact@v3
-      #      with:
-      #        name: test-files
-      #        path: test-files.tgz
-      #        retention-days: 1
+          #    - name: Tarball
+          #      run: tar -zcvf test-files.tgz ${DEBVER}/pico/lib/libpico.a 
+    - name: Store files
+      uses: actions/upload-artifact@v3
+      with:
+        name: static-lib
+        retention-days: 1
+        path: |
+          ${DEBVER}/pico/lib/libpico.a
+          ${DEBVER}/pico/lib/*.h
+
 
