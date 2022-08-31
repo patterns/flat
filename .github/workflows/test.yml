@@ -1,0 +1,39 @@
+name: build go linked to pico
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+env:
+  DEBVER: svox-1.0+git20130326
+
+jobs:
+
+  build-it:
+    name: Build binary
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Req dependencies
+      run: |
+          sudo cp pico/deb.list /etc/apt/sources.list.d/
+          sudo apt-get update
+          apt-get source libttspico-utils
+
+    - name: Build static lib
+      run: |
+          cd ${DEBVER}/pico/lib
+          gcc -fPIC -g -c *.c
+          ar rcs libpico.a *.o
+    - name: Tarball
+      run: tar -zcvf test-files.tgz ${DEBVER}/pico/lib/libpico.a ${DEBVER}/pico/lib/*.h
+    - name: Store files
+      uses: actions/upload-artifact@v3
+      with:
+        name: static-lib
+        retention-days: 1
+        path: test-files.tgz
+
+
