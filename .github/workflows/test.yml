@@ -17,7 +17,10 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Req dependencies
-      run: sudo apt-get source libttspico-utils
+      run: |
+          sudo cp pico/deb.list /etc/apt/sources.list.d/
+          sudo apt-get update
+          sudo apt-get source libttspico-utils
 
     - name: see files
       run: ls -l
