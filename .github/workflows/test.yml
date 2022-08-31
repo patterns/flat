@@ -20,7 +20,7 @@ jobs:
       run: |
           sudo cp pico/deb.list /etc/apt/sources.list.d/
           sudo apt-get update
-          sudo apt-get source libttspico-utils
+          apt-get source libttspico-utils
 
     - name: static lib
       run: |
