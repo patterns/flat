@@ -22,6 +22,8 @@ tinygo build -o hello.wasm -target=wasi -gc=leaking -no-debug cmd/stdout/*.go
 
 ## Credits
 
+[bazel cgo](https://blog.modest-destiny.com/posts/building-golang-cgo-with-bazel/)
+
 [gopicotts by Todd Neal](https://github.com/tzneal/gopicotts)
 
 [pico-tts by Michael Clark](https://github.com/Iiridayn/pico-tts)

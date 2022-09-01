@@ -2,20 +2,28 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"os"
+
+	"github.com/tzneal/gopicotts"
 )
 
 func main() {
-	var counter uint
-	var scanner = bufio.NewScanner(os.Stdin)
-	for scanner.Scan() {
-		counter += 1
-		fmt.Printf("%d %s\n", counter, scanner.Text())
-	}
+	var opts = gopicotts.DefaultOptions
+	opts.LanguageDir = "./"
+	eng, err := gopicotts.NewEngine(opts)
+	defer eng.Close()
 
-	/*
-	if err := scanner.Err(); err != nil {
-		fmt.Fprintln(os.Stderr, "reading standard input:", err)
-	}*/
+	if err != nil {
+		panic(err)
+	}
+	//TODO stdout (wav headers)
+	eng.SetFileOutput("testpico.wav")
+
+        var scanner = bufio.NewScanner(os.Stdin)
+        for scanner.Scan() {
+		eng.SendText(scanner.Text())
+        }
+
+	eng.FlushSendText()
+	eng.CloseFileOutput()
 }
