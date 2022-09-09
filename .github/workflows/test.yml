@@ -18,7 +18,7 @@ jobs:
 
     - name: Req dependencies
       run: |
-          sudo cp pico/deb.list /etc/apt/sources.list.d/
+          sudo cp lib/deb.list /etc/apt/sources.list.d/
           sudo apt-get update
           apt-get source libttspico-utils
 
