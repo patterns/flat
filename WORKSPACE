@@ -28,9 +28,9 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 # The first declaration of an external repository "wins".
 ############################################################
 
-load("//:deps.bzl", "go_dependencies")
+load("//third_party:remoterepos.bzl", "go_dependencies")
 
-# gazelle:repository_macro deps.bzl%go_dependencies
+# gazelle:repository_macro third_party/remoterepos.bzl%go_dependencies
 go_dependencies()
 
 go_rules_dependencies()

@@ -4,13 +4,14 @@ import (
 	"bufio"
 	"os"
 
-	"github.com/tzneal/gopicotts"
+	tts "github.com/tzneal/gopicotts"
 )
 
 func main() {
-	var opts = gopicotts.DefaultOptions
+	var opts = tts.DefaultOptions
 	opts.LanguageDir = "./"
-	eng, err := gopicotts.NewEngine(opts)
+	opts.Language = tts.LanguageEnGB
+	eng, err := tts.NewEngine(opts)
 	defer eng.Close()
 
 	if err != nil {

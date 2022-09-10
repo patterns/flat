@@ -18,12 +18,16 @@ COPY --from=debsrc /opt/${DEBVER}/pico /opt/pico
 RUN cd /opt/pico/lib && gcc -fPIC -g -c *.c && ar rcs libpico.a *.o
 
 # final stage
-FROM golang:1.19.0-bullseye
+FROM golang:1.19.1-bullseye
 RUN apt-get update && apt-get install -y --no-install-recommends patch
 COPY --from=debsrc /tmp/bazel-5.3.0 /bin/bazel
 COPY . /myapp
 COPY --from=libpico /opt/pico/lib/ /myapp/lib/
+# language default
+COPY --from=libpico /opt/pico/lang/PicoLangEnGBInSystem.mk /myapp/cmd/wavout/
+COPY --from=libpico /opt/pico/lang/all_pico_languages.mk /myapp/cmd/wavout/
+COPY --from=libpico /opt/pico/lang/en-GB_kh0_sg.bin /myapp/cmd/wavout/
+COPY --from=libpico /opt/pico/lang/en-GB_ta.bin /myapp/cmd/wavout/
 
-# bazelisk run //:gazelle
-# bazelisk run //:gazelle-update-repos
-# bazelisk build //...
+RUN mv /myapp/third_party/BUILD.pico /myapp/lib/BUILD.bazel
+##RUN cd /myapp && bazel build //cmd/wavout:wavout
