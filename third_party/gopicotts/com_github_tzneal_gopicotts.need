@@ -1,0 +1,27 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "gopicotts",
+    srcs = [
+        "doc.go",
+        "lang.go",
+        "language_string.go",
+        "pico.go",
+    ],
+    cgo = True,
+    cdeps = ["@//lib:ttspico"], # keep
+    importpath = "github.com/tzneal/gopicotts",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":gopicotts",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "gopicotts_test",
+    srcs = ["gopicotts_test.go"],
+    embed = [":gopicotts"],
+)

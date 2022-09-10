@@ -1,4 +1,3 @@
-workspace(name = "io_github_patterns_flat")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
@@ -21,7 +20,7 @@ http_archive(
     ],
 )
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 
 ############################################################
 # Define your own dependencies here using go_repository.
@@ -29,6 +28,13 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 # The first declaration of an external repository "wins".
 ############################################################
 
+load("//third_party:remoterepos.bzl", "go_dependencies")
+
+# gazelle:repository_macro third_party/remoterepos.bzl%go_dependencies
+go_dependencies()
+
 go_rules_dependencies()
+
 go_register_toolchains(version = "1.18.4")
+
 gazelle_dependencies()

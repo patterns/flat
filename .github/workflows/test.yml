@@ -9,31 +9,47 @@ env:
 
 jobs:
 
-  build-it:
-    name: Build binary
-
+  pico-lib:
+    name: Extract Pico package
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-
-    - name: Req dependencies
+    - name: Source deb pkg
       run: |
-          sudo cp pico/deb.list /etc/apt/sources.list.d/
+          sudo cp third_party/deb.list /etc/apt/sources.list.d/
           sudo apt-get update
           apt-get source libttspico-utils
 
-    - name: Build static lib
+    - name: Build static lib (optional )
       run: |
           cd ${DEBVER}/pico/lib
           gcc -fPIC -g -c *.c
           ar rcs libpico.a *.o
     - name: Tarball
-      run: tar -zcvf test-files.tgz ${DEBVER}/pico/lib/libpico.a ${DEBVER}/pico/lib/*.h
-    - name: Store files
+      run: |
+          tar -zcvf test-files.tgz \
+                    ${DEBVER}/pico/lib/libpico.a ${DEBVER}/pico/lib/*.h \
+                    ${DEBVER}/pico/lang/en-GB_*.bin \
+                    ${DEBVER}/pico/lang/PicoLangEnGBInSystem.mk \
+                    ${DEBVER}/pico/lang/all_pico_languages.mk
+    - name: Store tarball
       uses: actions/upload-artifact@v3
       with:
         name: static-lib
         retention-days: 1
         path: test-files.tgz
+
+  build-it:
+    name: Build binary
+    needs: pico-lib
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Unshelve tarball
+      uses: actions/download-artifact@v3
+      with:
+        name: static-lib
+    - name: Unpack tarball
+      run: tar -zxvf test-files.tgz
 
 

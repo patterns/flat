@@ -1,0 +1,11 @@
+--- BUILD.bazel
++++ BUILD.bazel
+@@ -9,7 +9,7 @@
+         "pico.go",
+     ],
+     cgo = True,
+-    clinkopts = ["-lttspico"],
++    cdeps = ["@//lib:ttspico"], # keep
+     importpath = "github.com/tzneal/gopicotts",
+     visibility = ["//visibility:public"],
+ )

@@ -1,0 +1,15 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "wavout_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/patterns/flat/cmd/wavout",
+    visibility = ["//visibility:private"],
+    deps = ["@com_github_tzneal_gopicotts//:go_default_library"],
+)
+
+go_binary(
+    name = "wavout",
+    embed = [":wavout_lib"],
+    visibility = ["//visibility:public"],
+)

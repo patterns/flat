@@ -22,6 +22,12 @@ tinygo build -o hello.wasm -target=wasi -gc=leaking -no-debug cmd/stdout/*.go
 
 ## Credits
 
+[bazel wasm protobuf](https://maori.geek.nz/a-web-app-using-bazel-golang-wasm-and-proto-c020914f4341)
+
+[bazel embed](https://github.com/bazelbuild/rules_go/blob/master/docs/go/core/embedding.md)
+
+[bazel cgo](https://blog.modest-destiny.com/posts/building-golang-cgo-with-bazel/)
+
 [gopicotts by Todd Neal](https://github.com/tzneal/gopicotts)
 
 [pico-tts by Michael Clark](https://github.com/Iiridayn/pico-tts)
