@@ -19,7 +19,7 @@ RUN cd /opt/pico/lib && gcc -fPIC -g -c *.c && ar rcs libpico.a *.o
 
 # final stage
 FROM golang:1.19.1-bullseye
-RUN apt-get update && apt-get install -y --no-install-recommends patch
+RUN apt-get update && apt-get install -y --no-install-recommends patch 
 COPY --from=debsrc /tmp/bazel-5.3.0 /bin/bazel
 COPY . /myapp
 COPY --from=libpico /opt/pico/lib/ /myapp/lib/
