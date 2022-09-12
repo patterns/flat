@@ -59,6 +59,7 @@ jobs:
     - name: Bazel build
       run: |
           mv third_party/BUILD.pico lib/BUILD.bazel
-          bazel build //...
+          mv lang/* cmd/wavout/
+          bazel build //cmd/wavout:wavout
 
 
