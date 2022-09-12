@@ -28,7 +28,7 @@ jobs:
     - name: Tarball
       run: |
           cd ${DEBVER}/pico
-          tar -zcvf test-files.tgz \
+          tar -zcvf ../../test-files.tgz \
                     lib/libpico.a lib/*.h \
                     lang/en-GB_*.bin \
                     lang/PicoLangEnGBInSystem.mk \
