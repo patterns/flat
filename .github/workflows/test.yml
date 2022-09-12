@@ -27,11 +27,12 @@ jobs:
           ar rcs libpico.a *.o
     - name: Tarball
       run: |
+          cd ${DEBVER}/pico
           tar -zcvf test-files.tgz \
-                    ${DEBVER}/pico/lib/libpico.a ${DEBVER}/pico/lib/*.h \
-                    ${DEBVER}/pico/lang/en-GB_*.bin \
-                    ${DEBVER}/pico/lang/PicoLangEnGBInSystem.mk \
-                    ${DEBVER}/pico/lang/all_pico_languages.mk
+                    lib/libpico.a ${DEBVER}/pico/lib/*.h \
+                    lang/en-GB_*.bin \
+                    lang/PicoLangEnGBInSystem.mk \
+                    lang/all_pico_languages.mk
     - name: Store tarball
       uses: actions/upload-artifact@v3
       with:
@@ -45,11 +46,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - uses: actions/setup-go@v3
+      with:
+        go-version: '>=1.18.0'
+
     - name: Unshelve tarball
       uses: actions/download-artifact@v3
       with:
         name: static-lib
     - name: Unpack tarball
       run: tar -zxvf test-files.tgz
+    - name: Bazel build
+      run: |
+          mv third_party/BUILD.pico lib/BUILD.bazel
+          bazel build //cmd/wavout:wavout
 
 
