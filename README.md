@@ -1,23 +1,34 @@
 # flat
 
-Learning Bazel mono repos by porting the
+Learning Bazel mono repos by: 
+
+- `cmd/hello` porting the
  [line tutorial](https://blog.cloudflare.com/running-zig-with-wasi-on-cloudflare-workers/)
  to Golang
+
+- make static library for pico tts
+
+- `cmd/wavout` use gopicotts with stdin pipe
+
+
+TODO (next items)
+1. embed GB lang files into `cmd/wavout/main.go`
+2. attempt decouple cgo/c lib by using pico-tts for roadmap
 
 ## Quickstart
 Generate BUILD files
 ```bash
-bazelisk run //:gazelle
+bazel run //:gazelle
 ```
 
 Build binaries
 ```bash
-bazelisk build //...
+bazel build //cmd/wavout:wavout
 ```
 
 Make WASM target
 ```bash
-tinygo build -o hello.wasm -target=wasi -gc=leaking -no-debug cmd/stdout/*.go
+tinygo build -o hello.wasm -target=wasi -gc=leaking -no-debug cmd/hello/*.go
 ```
 
 ## Credits
